@@ -31,7 +31,6 @@ app.post('/customers/register', (req, res) => {
 });
 
 
-
 // Customer Login
 app.post('/customers/login', (req, res) => {
   const { email, password } = req.body;
@@ -66,8 +65,6 @@ app.get('/services', (req, res) => {
 // Book a Service
 app.post('/bookings', (req, res) => {
   const { customer_id, service_id, service_type, vehicle_no, vehicle_model, booking_date } = req.body;
-
-
   pool.query(`INSERT INTO bookings (customer_id, service_id, service_type, vehicle_no, vehicle_model, booking_date) VALUES (?, ?, ?, ?, ?, ?)`,
     [customer_id, service_id, service_type, vehicle_no, vehicle_model, booking_date],
     (err, result) => {
@@ -146,8 +143,6 @@ app.get('/service_requests', (req, res) => {
 // Submit Feedback
 app.post('/feedback', (req, res) => {
   const { customer_id, service_id, rating, comments } = req.body;
-
-
   pool.query(`INSERT INTO feedback (customer_id, service_id, rating, comments) VALUES (?, ?, ?, ?)`,
     [customer_id, service_id, rating, comments],
     (err, result) => {
@@ -343,8 +338,6 @@ app.get('/feedback', (req, res) => {
 app.put('/feedback/:id', (req, res) => {
   const { id } = req.params;
   const { customer_id, service_id, rating, comments } = req.body;
-
-
   pool.query(`UPDATE feedback SET customer_id = ?, service_id = ?, rating = ?, comments = ? WHERE id = ?`,
     [customer_id, service_id, rating, comments, id],
     (err, result) => {
@@ -406,7 +399,6 @@ app.delete('/bookings/:id', (req, res) => {
 // Services - Add New
 app.post('/services', (req, res) => {
   const { service, description, status } = req.body;
-
   pool.query(`INSERT INTO service_list (service, description, status) VALUES (?, ?, ?)`,
     [service, description, status || 1],
     (err, result) => {
@@ -421,7 +413,6 @@ app.post('/services', (req, res) => {
 app.put('/services/:id', (req, res) => {
   const { id } = req.params;
   const { service, description, status } = req.body;
-
   pool.query(`UPDATE service_list SET service = ?, description = ?, status = ? WHERE id = ?`,
     [service, description, status, id],
     (err, result) => {
@@ -431,7 +422,6 @@ app.put('/services/:id', (req, res) => {
   );
 });
 
-
 // Services - Delete
 app.delete('/services/:id', (req, res) => {
   const { id } = req.params;
@@ -440,7 +430,6 @@ app.delete('/services/:id', (req, res) => {
     res.json({ message: 'Service deleted' });
   });
 });
-
 
 
 // Customers - Update
