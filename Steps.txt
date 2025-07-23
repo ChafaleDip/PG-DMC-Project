@@ -1,0 +1,29 @@
+npm i create-expo-app
+npx create-expo-app my-app --template
+ -> Choose "Blank" Template
+
+
+"my-app" is a project name.
+
+navigate to "my-app folder
+
+cd my-app
+
+npm i  react-dom@19.0.0
+npm i  react-native-web@^0.20.0
+npm i  @expo/metro-runtime@~5.0.4
+
+npm i react-native-web --force
+
+"run the application using"
+
+npx expo start
+
+
+Lab Exam
+Database,---------postman
+Express,----------postman
+React Native
+
+
+
