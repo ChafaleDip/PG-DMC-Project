@@ -1,0 +1,112 @@
+
+-- Database: Online_car_service_system
+
+CREATE DATABASE IF NOT EXISTS Online_car_service_system;
+USE Online_car_service_system;
+
+-- Table: vehicle_categories
+CREATE TABLE `vehicle_categories` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `vehicle_categories` (`name`) VALUES
+('Sedan'), ('SUV'), ('Convertible'), ('Electric Car'), ('Truck');
+
+-- Table: mechanics
+CREATE TABLE `mechanics` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `full_name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `mechanics` (`full_name`, `phone`, `email`) VALUES
+('Aditya Gokhale', '9876543210', 'adityagokhale@email.com'),
+('Dip Chafale', '9876501234', 'dip.chafale@email.com'),
+('Ajinkya Kaje', '9876501233', 'aj.kaje1@email.com'),
+('Vishal Reddy', '9876501232', 'reddy@email.com');
+
+-- Table: services
+CREATE TABLE `services` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `details` TEXT NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `services` (`title`, `details`) VALUES
+('Brake Inspection', 'Includes checking brake pads, discs, and fluids.'),
+('Battery Replacement', 'Includes battery health check and replacement if needed.'),
+('AC Repair', 'Complete AC system check and gas refill.'),
+('Suspension Check', 'Inspection of shock absorbers and linkages.');
+
+-- Table: service_requests
+CREATE TABLE `service_requests` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `client_name` VARCHAR(255) NOT NULL,
+  `category_id` INT(11) NOT NULL,
+  `service_mode` ENUM('Pick Up', 'Drop Off') NOT NULL,
+  `assigned_mechanic` INT(11),
+  `status` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`category_id`) REFERENCES `vehicle_categories`(`id`),
+  FOREIGN KEY (`assigned_mechanic`) REFERENCES `mechanics`(`id`)
+);
+INSERT INTO `service_requests` (`client_name`, `category_id`, `service_mode`, `assigned_mechanic`, `status`) VALUES
+('Arjun', 1, 'Pick Up', 1, 1),
+('Pooja', 3, 'Drop Off', 2, 2);
+
+-- Table: request_details
+CREATE TABLE `request_details` (
+  `request_id` INT(11) NOT NULL,
+  `field_name` VARCHAR(100) NOT NULL,
+  `field_value` TEXT NOT NULL,
+  FOREIGN KEY (`request_id`) REFERENCES `service_requests` (`id`) ON DELETE CASCADE
+);
+INSERT INTO `request_details` (`request_id`, `field_name`, `field_value`) VALUES
+(1, 'vehicle_name', 'Honda City'),
+(1, 'registration_number', 'MH12DE1433'),
+(1, 'vehicle_model', '2021'),
+(1, 'email', 'arjun123@example.com'),
+(1, 'pickup_location', 'Pune'),
+(2, 'vehicle_name', 'Tesla Model 3'),
+(2, 'registration_number', 'KA05MG4402'),
+(2, 'vehicle_model', '2022'),
+(2, 'email', 'pooja.k@example.com'),
+(2, 'pickup_location', 'Bangalore');
+
+-- Table: app_users
+CREATE TABLE `app_users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(100) NOT NULL,
+  `last_name` VARCHAR(100) NOT NULL,
+  `username` VARCHAR(100) NOT NULL UNIQUE,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `role` ENUM('Admin', 'Staff') DEFAULT 'Staff',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `app_users` (`first_name`, `last_name`, `username`, `password_hash`, `role`) VALUES
+('Admin', 'User', 'admin', MD5('admin123'), 'Admin'),
+('Staff', 'One', 'staff1', MD5('password1'), 'Staff');
+
+-- Table: system_config
+CREATE TABLE `system_config` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `key_name` VARCHAR(100) NOT NULL,
+  `value` TEXT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `system_config` (`key_name`, `value`) VALUES
+('system_name', 'Auto Service Hub'),
+('short_name', 'ASH'),
+('logo_url', 'uploads/logo.jpg'),
+('default_avatar', 'uploads/default_user.jpg');
