@@ -4,17 +4,17 @@ USE car_service_db;
 
 -- All Tables
 
--- Customers Table
-CREATE TABLE customers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    address TEXT,
-    vehicle_model VARCHAR(100),
-    vehicle_no VARCHAR(20)
-);
+-- -- Customers Table
+-- CREATE TABLE customers (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(100) NOT NULL,
+--     email VARCHAR(100) UNIQUE NOT NULL,
+--     phone VARCHAR(20) UNIQUE NOT NULL,
+--     password VARCHAR(100) NOT NULL,
+--     address TEXT,
+--     vehicle_model VARCHAR(100),
+--     vehicle_no VARCHAR(20)
+-- );
 
 -- Vehicle Categories
 CREATE TABLE categories (
