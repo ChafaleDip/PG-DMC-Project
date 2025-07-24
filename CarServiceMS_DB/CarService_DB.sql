@@ -2,6 +2,8 @@
 CREATE DATABASE IF NOT EXISTS car_service_db;
 USE car_service_db;
 
+-- All Tables
+
 -- Customers Table
 CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
